@@ -1,4 +1,4 @@
 import TiptapEditor from "./components/TiptapEditor";
-import "./style.css";
+import "./style.scss";
 
 export default TiptapEditor;
