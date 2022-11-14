@@ -21,23 +21,27 @@ pdfMake.fonts = {
 };
 
 const TiptapEditor = () => {
+  const initHtml = `
+    <h1>My title</h1>
+    <p>
+      This is a sentence with a <strong>bold word</strong>, <em>one in italic</em>,
+      and <u>one with underline</u>. And finally <a href="https://www.somewhere.com">a link</a>.
+    </p>
+  `;
+  const [code, setCode] = React.useState(initHtml);
+
   // Setup editor
   const editor = useEditor({
     extensions: [StarterKit],
-    content: `Hello`,
+    content: code,
+    onUpdate: ({ editor }) => {
+      setCode(editor.getHTML());
+    },
   });
 
   // Convert html to pdfmake
   const makePdf = () => {
-    let html = htmlToPdfmake(`
-      <div>
-        <h1>My title</h1>
-        <p>
-          This is a sentence with a <strong>bold word</strong>, <em>one in italic</em>,
-          and <u>one with underline</u>. And finally <a href="https://www.somewhere.com">a link</a>.
-        </p>
-      </div>
-    `);
+    let html = htmlToPdfmake(`<div>${code}</div>`);
     const docDefinition = { content: [html] };
     const pdfDocGenerator = pdfMake.createPdf(docDefinition);
     pdfDocGenerator.getDataUrl((dataUrl) => {
@@ -48,7 +52,8 @@ const TiptapEditor = () => {
 
   React.useEffect(() => {
     makePdf();
-  }, []);
+    console.log(code);
+  }, [code]);
 
   return (
     <div className="container">
