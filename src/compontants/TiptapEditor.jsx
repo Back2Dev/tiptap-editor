@@ -1,7 +1,36 @@
 import React from "react";
 import Split from "react-split";
+
+// icons
+import {
+  RiBold,
+  RiItalic,
+  RiStrikethrough,
+  RiCodeSSlashLine,
+  RiH1,
+  RiH2,
+  RiH3,
+  RiH4,
+  RiH5,
+  RiH6,
+  RiParagraph,
+  RiListOrdered,
+  RiListUnordered,
+  RiCodeBoxLine,
+  RiSeparator,
+  RiTextWrap,
+  RiFormatClear,
+  RiArrowGoBackLine,
+  RiArrowGoForwardLine,
+} from "react-icons/ri";
 // tiptap
-import { useEditor, EditorContent } from "@tiptap/react";
+import {
+  FloatingMenu,
+  BubbleMenu,
+  useEditor,
+  EditorContent,
+  Editor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 // html-to-pdfmake
@@ -57,9 +86,42 @@ const TiptapEditor = () => {
 
   return (
     <div className="container">
-      <Split className="split" sizes={[50, 50]} minSize={0}>
+      <Split
+        className="split"
+        sizes={[60, 40]}
+        minSize={200}
+        expandToMin={false}
+        gutterSize={8}
+        gutterAlign="center"
+        snapOffset={30}
+        dragInterval={1}
+        direction="horizontal"
+        cursor="col-resize"
+      >
         <div className="tiptap">
-          <MenuBar editor={editor} />
+          {editor && (
+            <BubbleMenu editor={editor} className="BubbleMenu">
+              <div
+                className="icon"
+                onClick={() => editor.chain().focus().toggleBold().run()}
+              >
+                <RiBold />
+              </div>
+              <div
+                className="icon"
+                onClick={() => editor.chain().focus().toggleItalic().run()}
+              >
+                <RiItalic />
+              </div>
+              <div
+                className="icon"
+                onClick={() => editor.chain().focus().toggleStrike().run()}
+              >
+                <RiStrikethrough />
+              </div>
+            </BubbleMenu>
+          )}
+          <ToolBar editor={editor} />
           <EditorContent editor={editor} />
         </div>
         <iframe className="preview" id="pdfView" src="" />
@@ -70,132 +132,128 @@ const TiptapEditor = () => {
 
 export default TiptapEditor;
 
-// Setup MenuBar and buttons
-const MenuBar = ({ editor }) => {
+const ToolBar = ({ editor }) => {
   if (!editor) {
     return null;
   }
 
   return (
-    <>
-      <button
+    <div className="Toolbar">
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleBold().run()}
-        disabled={!editor.can().chain().focus().toggleBold().run()}
-        className={editor.isActive("bold") ? "is-active" : ""}
       >
-        bold
-      </button>
-      <button
+        <RiBold />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleItalic().run()}
-        disabled={!editor.can().chain().focus().toggleItalic().run()}
-        className={editor.isActive("italic") ? "is-active" : ""}
       >
-        italic
-      </button>
-      <button
+        <RiItalic />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleStrike().run()}
-        disabled={!editor.can().chain().focus().toggleStrike().run()}
-        className={editor.isActive("strike") ? "is-active" : ""}
       >
-        strike
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleCode().run()}
-        disabled={!editor.can().chain().focus().toggleCode().run()}
-        className={editor.isActive("code") ? "is-active" : ""}
-      >
-        code
-      </button>
-      <button onClick={() => editor.chain().focus().unsetAllMarks().run()}>
-        clear marks
-      </button>
-      <button onClick={() => editor.chain().focus().clearNodes().run()}>
-        clear nodes
-      </button>
-      <button
-        onClick={() => editor.chain().focus().setParagraph().run()}
-        className={editor.isActive("paragraph") ? "is-active" : ""}
-      >
-        paragraph
-      </button>
-      <button
+        <RiStrikethrough />
+      </div>
+      <div className="divider"></div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-        className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
       >
-        h1
-      </button>
-      <button
+        <RiH1 />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-        className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
       >
-        h2
-      </button>
-      <button
+        <RiH2 />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-        className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
       >
-        h3
-      </button>
-      <button
+        <RiH3 />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 4 }).run()}
-        className={editor.isActive("heading", { level: 4 }) ? "is-active" : ""}
       >
-        h4
-      </button>
-      <button
+        <RiH4 />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 5 }).run()}
-        className={editor.isActive("heading", { level: 5 }) ? "is-active" : ""}
       >
-        h5
-      </button>
-      <button
+        <RiH5 />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleHeading({ level: 6 }).run()}
-        className={editor.isActive("heading", { level: 6 }) ? "is-active" : ""}
       >
-        h6
-      </button>
-      <button
+        <RiH6 />
+      </div>
+      <div
+        className="icon"
+        onClick={() => editor.chain().focus().setParagraph().run()}
+      >
+        <RiParagraph />
+      </div>
+      <div className="divider"></div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleBulletList().run()}
-        className={editor.isActive("bulletList") ? "is-active" : ""}
       >
-        bullet list
-      </button>
-      <button
+        <RiListOrdered />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        className={editor.isActive("orderedList") ? "is-active" : ""}
       >
-        ordered list
-      </button>
-      <button
+        <RiListUnordered />
+      </div>
+      <div
+        className="icon"
+        onClick={() => editor.chain().focus().toggleCode().run()}
+      >
+        <RiCodeSSlashLine />
+      </div>
+      <div
+        className="icon"
         onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        className={editor.isActive("codeBlock") ? "is-active" : ""}
       >
-        code block
-      </button>
-      <button
-        onClick={() => editor.chain().focus().toggleBlockquote().run()}
-        className={editor.isActive("blockquote") ? "is-active" : ""}
+        <RiCodeBoxLine />
+      </div>
+      <div
+        className="icon"
+        onClick={() => editor.chain().focus().setHorizontalRule().run()}
       >
-        blockquote
-      </button>
-      <button onClick={() => editor.chain().focus().setHorizontalRule().run()}>
-        horizontal rule
-      </button>
-      <button onClick={() => editor.chain().focus().setHardBreak().run()}>
-        hard break
-      </button>
-      <button
-        onClick={() => editor.chain().focus().undo().run()}
-        disabled={!editor.can().chain().focus().undo().run()}
+        <RiSeparator />
+      </div>
+      <div className="divider"></div>
+      <hr />
+      <div
+        className="icon"
+        onClick={() => editor.chain().focus().setHardBreak().run()}
       >
-        undo
-      </button>
-      <button
-        onClick={() => editor.chain().focus().redo().run()}
-        disabled={!editor.can().chain().focus().redo().run()}
+        <RiTextWrap />
+      </div>
+      <div
+        className="icon"
+        onClick={() =>
+          editor.chain().focus().unsetAllMarks().clearNodes().run()
+        }
       >
-        redo
-      </button>
-    </>
+        <RiFormatClear />
+      </div>
+      <div className="divider"></div>
+      <div className="icon" onClick={() => editor.chain().focus().undo().run()}>
+        <RiArrowGoBackLine />
+      </div>
+      <div className="icon" onClick={() => editor.chain().focus().redo().run()}>
+        <RiArrowGoForwardLine />
+      </div>
+    </div>
   );
 };
