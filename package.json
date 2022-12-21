@@ -1,5 +1,5 @@
 {
-  "name": "tiptap-editor",
+  "name": "b2b-tt-editor",
   "version": "1.0.0",
   "description": "tiptap to html then html to pdf",
   "main": "./src/index.js",

@@ -11,7 +11,7 @@ npm i tiptap-editor
 ```javascript
 import React from "react";
 import ReactDOM from "react-dom/client";
-import TiptapEditor from "tiptap-editor";
+import TiptapEditor from "b2b-tt-editor";
 
 const App = () => {
   return <TiptapEditor />;
@@ -22,7 +22,7 @@ export default App;
 ### Local development
 
 Pull the repository to local
-cd to 'tiptap-editor' folder
+cd to 'b2b-tt-editor' folder
 
 ```
 npm i
@@ -33,11 +33,11 @@ npm link  'test react folder'/node_modules/react
 Then go to Test folder
 
 ```
-npm link tiptap-editor
+npm link b2b-tt-editor
 ```
 
 When you finish test remember to unlink by use
 
 ```
-npm unlink tiptap-editor
+npm unlink b2b-tt-editor
 ```
